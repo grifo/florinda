@@ -5,12 +5,22 @@ brain    = require './brains'
 request  = require 'request'
 { exec } = require 'child_process'
 
+try
+    config = JSON.parse require('fs').readFileSync 'config.json'
+catch e
+    config = {}
+
 #####
 
+CHAT_OFF = 'nochat' in process.argv
+
 sendChatMessage = (message) ->
+    if CHAT_OFF then return
+    
     url = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
     
-    console.log "sending #{url}"
+    console.log "answering: \n#{message}"
+    console.log "requesting #{url}"
     request.get url, (err, response, body) ->
         if not err and response.statusCode is 200
             console.log "answer sent"
@@ -19,7 +29,7 @@ sendChatMessage = (message) ->
             
 #####
 
-reloadServer = (cb) ->
+reloadServer = (cb = ->) ->
     exec 'git pull && forever restart florinda.js', (err, stdout, stderr) ->
         if err then cb "Aaaarrgh! I'm hurt"
         
@@ -45,10 +55,25 @@ server = http.createServer (req, res) ->
     
     if req.method is 'GET'
         
-        query = url.parse(req.url, true).query?.body
-        if query and matches = query.match(pattern)
-
-            [user, command] = matches.slice(1)
+        params = url.parse(req.url, true).query
+        
+        console.log params
+        
+        if params?.reload == 1 && params.key == config.key
+            console.log "** RELOADING **"
+            reloadServer()
+            return
+        
+        if params?.restart == 1 && params.key == config.key
+            console.log "** RESTARTING **"
+            reloadServer()
+            return
+        
+        command = params?.command
+        
+        if command
+            
+            user = 'john'
             #command = command.replace /\s?\<.+\>\/g, ''
 
             console.log """
@@ -61,7 +86,7 @@ server = http.createServer (req, res) ->
                 res.end answer
 
         else
-            res.end 'shit'
+            res.end 'no command'
         
     else if req.method is 'POST'
     
@@ -79,8 +104,7 @@ server = http.createServer (req, res) ->
                 #command = command.replace /\s?\<.+\>/g, ''
         
                 console.log "received command #{command}"
-                brain.receive user, command, (answer) ->
-                    sendChatMessage anser
+                brain.receive user, command, sendChatMessage
         
         res.end()
 

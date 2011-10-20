@@ -25,7 +25,6 @@ twitterSearch = (query, respond) ->
         else
             message = "I'm sorry, nothing found for '#{query}' on twitter."
         
-        console.log "answering: #{message}"
         respond message
 
 # search for shit on twitter
