@@ -32,7 +32,7 @@ sendChatMessage = (message) ->
             
 #####
 
-reloadServer = (msg) ->
+global.reloadServer = (msg) ->
     cb ?= ->
     if not msg then sendChatMessage 'Restarting...'
     exec 'git pull', (err, stdout, stderr) ->
@@ -44,7 +44,7 @@ reloadServer = (msg) ->
             sendChatMessage msg or stdout
             setTimeout restartServer, 1000
         
-restartServer = () ->
+global.restartServer = () ->
     exec 'forever restart florinda.js', (err, stdout, stderr) ->
         if err then sendChatMessage "Aaaarrgh! I'm hurt"
 
