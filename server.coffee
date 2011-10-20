@@ -21,10 +21,10 @@ sendChatMessage = (message) ->
 
     if CHAT_OFF then return
     
-    url = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
+    chatURL = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
     
-    console.log "requesting #{url}"
-    request.get url, (err, response, body) ->
+    console.log "requesting #{chatURL}"
+    request.get chatURL, (err, response, body) ->
         if not err and response.statusCode is 200
             console.log "answer sent"
         else
