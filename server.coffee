@@ -32,23 +32,21 @@ sendChatMessage = (message) ->
             
 #####
 
-reloadServer = (cb, msg) ->
+reloadServer = (msg) ->
     cb ?= ->
+    if not msg then sendChatMessage 'Restarting...'
     exec 'git pull', (err, stdout, stderr) ->
         if err
             console.log "git pull failed"
             cb "Failed to update :/"
         else
             console.log stdout
-            if msg
-                cb msg
-            else
-                cb stdout + "\n Restarting..."
-            restartServer cb
+            sendChatMessage msg or stdout
+            setTimeout restartServer, 1000
         
-restartServer = (cb) ->
+restartServer = () ->
     exec 'forever restart florinda.js', (err, stdout, stderr) ->
-        if err then cb "Aaaarrgh! I'm hurt"
+        if err then sendChatMessage "Aaaarrgh! I'm hurt"
 
 #####
 
@@ -78,7 +76,7 @@ server = http.createServer (req, res) ->
         if params?.restart == '1' and params.key == config.key
             console.log "** RESTARTING **"
             res.end "** RESTARTING **"
-            reloadServer()
+            restartServer()
             return
         
         command = params?.command
@@ -114,7 +112,7 @@ server = http.createServer (req, res) ->
             if payload and params?.reload == '1' and params.key == config.key
                 console.log "** RELOADING (push) **"
                 res.end "** RELOADING (push) **"
-                reloadServer sendChatMessage, "#{payload.commits[0]?.author.name} pushed to github, restarting..."
+                reloadServer "#{payload.commits[0]?.author.name} pushed to github, restarting..."
                 return
         
             query = qs.parse(body)?.body
