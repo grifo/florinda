@@ -32,7 +32,8 @@ sendChatMessage = (message) ->
             
 #####
 
-reloadServer = (cb = ->, msg) ->
+reloadServer = (cb, msg) ->
+    cb ?= ->
     exec 'git pull', (err, stdout, stderr) ->
         if err
             console.log "git pull failed"
