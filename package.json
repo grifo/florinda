@@ -1,0 +1,17 @@
+{
+  "author": "Ricardo Tomasi <ricardo@gri.fo>",
+  "name": "chatbot-florinda",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "server.js",
+  "engines": {
+    "node": "v0.4"
+  },
+  "dependencies": {
+      "coffee-script": "",
+      "request": ""
+  },
+  "devDependencies": {}
+}
