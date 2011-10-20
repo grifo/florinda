@@ -5,7 +5,7 @@
   "repository": {
     "url": ""
   },
-  "main": "server.js",
+  "main": "florinda.js",
   "engines": {
     "node": "v0.4"
   },
