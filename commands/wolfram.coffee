@@ -49,5 +49,4 @@ brain.wolframSearch = (query, respond) ->
                     message += "\n#{[text.firstchild().text]}"
             catch e
         
-        console.log "answering: #{message}"
         respond message

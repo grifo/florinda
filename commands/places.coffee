@@ -27,7 +27,6 @@ placeSearch = (query, respond) ->
         else
             message = "I'm sorry, I couldn't find '#{query}'."
         
-        console.log "answering: #{message}"
         respond message
 
 # search for shit on twitter
