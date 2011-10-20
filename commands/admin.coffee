@@ -1,19 +1,6 @@
-{ exec } = require 'child_process'
-
-brain.patterns.reload =
-    match: [/^reload\syourself/i]
+brain.patterns.reloadServer =
+    match: [/^(reload|restart)\syourself/i]
     fn: (user, m, cb) ->
-        exec 'git pull && forever restart florinda.js', (error, stdout, stderr) ->
-            if error
-                cb "Aaaarrgh! I'm hurt"
-            else
-                # nada, esse processo vai ter morrido
-                
-brain.patterns.restart =
-    match: [/^restart\syourself/i]
-    fn: (user, m, cb) ->
-        exec 'forever restart florinda.js', (error, stdout, stderr) ->
-            if error
-                cb "Aaaarrgh! I'm hurt"
-            else
-                # nada, esse processo vai ter morrido
+        switch m[1]
+            when 'reload' then reloadServer cb
+            when 'restart' then restartServer cb

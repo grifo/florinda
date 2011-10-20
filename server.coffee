@@ -1,8 +1,9 @@
-qs      = require 'querystring'
-url     = require 'url'
-http    = require 'http'
-brain   = require './brains'
-request = require 'request'
+qs       = require 'querystring'
+url      = require 'url'
+http     = require 'http'
+brain    = require './brains'
+request  = require 'request'
+{ exec } = require 'child_process'
 
 #####
 
@@ -16,6 +17,16 @@ sendChatMessage = (message) ->
         else
             console.log "erro #{[err]}"
             
+#####
+
+reloadServer = (cb) ->
+    exec 'git pull && forever restart florinda.js', (err, stdout, stderr) ->
+        if err then cb "Aaaarrgh! I'm hurt"
+        
+restartServer = (cb) ->
+    exec 'forever restart florinda.js', (err, stdout, stderr) ->
+        if err then cb "Aaaarrgh! I'm hurt"
+
 #####
 
 sendChatMessage 'Hello!'
