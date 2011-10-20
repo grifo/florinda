@@ -39,7 +39,7 @@ reloadServer = (cb = ->) ->
             cb "Failed to update :/"
         else
             console.log stdout
-            cb stdout
+            cb stdout + "\n Restarting..."
             restartServer cb
         
 restartServer = (cb) ->
@@ -110,7 +110,8 @@ server = http.createServer (req, res) ->
             if query and matches = query.match(pattern)
             
                 [user, command] = matches.slice(1)
-                #command = command.replace /\s?\<.+\>/g, ''
+                # remove link references added by iChat
+                command = command.replace /\s?\<.+\>/g, ''
         
                 console.log "received command #{command}"
                 brain.receive user, command, sendChatMessage
