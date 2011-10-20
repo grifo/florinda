@@ -32,14 +32,17 @@ sendChatMessage = (message) ->
             
 #####
 
-reloadServer = (cb = ->) ->
+reloadServer = (cb = ->, msg) ->
     exec 'git pull', (err, stdout, stderr) ->
         if err
             console.log "git pull failed"
             cb "Failed to update :/"
         else
             console.log stdout
-            cb stdout + "\n Restarting..."
+            if msg
+                cb msg
+            else
+                cb stdout + "\n Restarting..."
             restartServer cb
         
 restartServer = (cb) ->
@@ -61,18 +64,17 @@ server = http.createServer (req, res) ->
         (.+)           # command given
     ///
     
+    params = url.parse(req.url, true).query
     
     if req.method is 'GET'
         
-        params = url.parse(req.url, true).query
-        
-        if params?.reload == '1' && params.key == config.key
+        if params?.reload == '1' and params.key == config.key
             console.log "** RELOADING **"
             res.end "** RELOADING **"
             reloadServer()
             return
         
-        if params?.restart == '1' && params.key == config.key
+        if params?.restart == '1' and params.key == config.key
             console.log "** RESTARTING **"
             res.end "** RESTARTING **"
             reloadServer()
@@ -105,6 +107,14 @@ server = http.createServer (req, res) ->
             body += data
     
         req.on 'end', ->
+        
+            # someone pushed to github, reload
+            payload = qs.parse(body)?.payload
+            if payload and params?.reload == '1' and params.key == config.key
+                console.log "** RELOADING (push) **"
+                res.end "** RELOADING (push) **"
+                reloadServer sendChatMessage, "#{payload.commits[0]?.author.name} pushed to github, restarting..."
+                return
         
             query = qs.parse(body)?.body
             if query and matches = query.match(pattern)
