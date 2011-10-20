@@ -6,6 +6,20 @@ request = require 'request'
 
 #####
 
+sendChatMessage = (message) ->
+    url = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
+    
+    console.log "sending #{url}"
+    request.get url, (err, response, body) ->
+        if not err and response.statusCode is 200
+            console.log "answer sent"
+        else
+            console.log "erro #{[err]}"
+            
+#####
+
+sendChatMessage 'Hello!'
+
 server = http.createServer (req, res) ->
 
     pattern = ///
@@ -55,18 +69,7 @@ server = http.createServer (req, res) ->
         
                 console.log "received command #{command}"
                 brain.receive user, command, (answer) ->
-            
-                    #res.writeHead 200, { "Content-Type": 'text/plain' }
-                    #res.end answer
-                    
-                    url = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message:answer }).replace(/\'/g, '%27')
-                    
-                    console.log "sending #{url}"
-                    request.get url, (err, response, body) ->
-                        if not err and response.statusCode is 200
-                            console.log "answer sent"
-                        else
-                            console.log "erro #{[err]}"
+                    sendChatMessage anser
         
         res.end()
 
