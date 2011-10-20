@@ -13,13 +13,14 @@ catch e
 
 #####
 
-CHAT_OFF = 'nochat' in process.argv
+config.nochat ?= 'nochat' in process.argv
+config.silent ?= 'silent' in process.argv
 
 sendChatMessage = (message) ->
 
     console.log "sending message: \n#{message}"
 
-    if CHAT_OFF then return
+    if config.nochat then return
     
     chatURL = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
     
@@ -50,7 +51,7 @@ global.restartServer = () ->
 
 #####
 
-sendChatMessage 'Hello!'
+if not config.silent then sendChatMessage 'Hello!'
 
 server = http.createServer (req, res) ->
 
