@@ -1,3 +1,4 @@
+fs       = require 'fs'
 qs       = require 'querystring'
 url      = require 'url'
 http     = require 'http'
@@ -6,7 +7,7 @@ request  = require 'request'
 { exec } = require 'child_process'
 
 try
-    config = JSON.parse require('fs').readFileSync 'config.json'
+    config = JSON.parse fs.readFileSync './config.json', 'utf8'
 catch e
     config = {}
 
@@ -15,11 +16,13 @@ catch e
 CHAT_OFF = 'nochat' in process.argv
 
 sendChatMessage = (message) ->
+
+    console.log "sending message: \n#{message}"
+
     if CHAT_OFF then return
     
     url = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
     
-    console.log "answering: \n#{message}"
     console.log "requesting #{url}"
     request.get url, (err, response, body) ->
         if not err and response.statusCode is 200
@@ -30,8 +33,14 @@ sendChatMessage = (message) ->
 #####
 
 reloadServer = (cb = ->) ->
-    exec 'git pull && forever restart florinda.js', (err, stdout, stderr) ->
-        if err then cb "Aaaarrgh! I'm hurt"
+    exec 'git pull', (err, stdout, stderr) ->
+        if err
+            console.log "git pull failed"
+            cb "Failed to update :/"
+        else
+            console.log stdout
+            cb stdout
+            restartServer cb
         
 restartServer = (cb) ->
     exec 'forever restart florinda.js', (err, stdout, stderr) ->
@@ -57,15 +66,15 @@ server = http.createServer (req, res) ->
         
         params = url.parse(req.url, true).query
         
-        console.log params
-        
-        if params?.reload == 1 && params.key == config.key
+        if params?.reload == '1' && params.key == config.key
             console.log "** RELOADING **"
+            res.end "** RELOADING **"
             reloadServer()
             return
         
-        if params?.restart == 1 && params.key == config.key
+        if params?.restart == '1' && params.key == config.key
             console.log "** RESTARTING **"
+            res.end "** RESTARTING **"
             reloadServer()
             return
         
