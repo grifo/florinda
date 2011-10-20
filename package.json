@@ -11,7 +11,8 @@
   },
   "dependencies": {
       "coffee-script": "",
-      "request": ""
+      "request": "",
+      "dom-js": ""
   },
   "devDependencies": {}
 }
