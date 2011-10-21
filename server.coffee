@@ -109,7 +109,11 @@ server = http.createServer (req, res) ->
         req.on 'end', ->
         
             # someone pushed to github, reload
-            payload = qs.parse(body)?.payload
+            try
+                payload = JSON.parse qs.parse(body).payload
+            catch e
+                payload = null
+                
             if payload and params?.reload == '1' and params.key == config.key
                 console.log "** RELOADING (push) **"
                 res.end "** RELOADING (push) **"
@@ -125,8 +129,9 @@ server = http.createServer (req, res) ->
         
                 console.log "received command #{command}"
                 brain.receive user, command, sendChatMessage
-        
-        res.end()
+                return
+            
+            res.end()
 
 #####
 
