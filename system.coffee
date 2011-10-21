@@ -1,3 +1,6 @@
+qs      = require 'querystring'
+request = require 'request'
+
 module.exports = 
 
     say: (message) ->
