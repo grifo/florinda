@@ -19,18 +19,18 @@ nextLine = (i, user) ->
     bayDoors = 0 if bayDoors >= answers.length
     return a
     
-brain.patterns.baydoors1 =
+brain.addPattern 'bayDoors1',
     match: [/open\s(the\s)?pod\sbay\sdoors?/i]
     fn: (user, m, cb) -> cb nextLine(0, user)
 
-brain.patterns.baydoors2 =
+brain.addPattern 'bayDoors2',
     match: [/what(\'s|\sis)\sthe\sproblem\??/i]
     fn: (user, m, cb) -> cb nextLine(1)
 
-brain.patterns.baydoors3 =
+brain.addPattern 'bayDoors3',
     match: [/what\sare\syou\stalking\sabout\??/i]
     fn: (user, m, cb) -> cb nextLine(2)
     
-brain.patterns.baydoors4 =
+brain.addPattern 'bayDoors4',
     match: [/I\sdon\'?t\sknow\swhat\syou(\'re|\sare)\stalking\sabout/i]
     fn: (user, m, cb) -> cb nextLine(3)

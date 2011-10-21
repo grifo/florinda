@@ -31,7 +31,7 @@ placeSearch = (query, respond) ->
 
 # search for shit on twitter
 # search shit on twitter
-brain.patterns.place =
+brain.addPattern 'places',
     match: [
         /where\sis\s([^?]+)\s?\??/i
     ]

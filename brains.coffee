@@ -4,6 +4,14 @@ fs      = require 'fs'
 
 module.exports = global.brain =
     patterns: {}
+    addPattern: (name, p) ->
+        if not @patterns[name]?
+            # allow single regular expression
+            if p.match instanceof RegExp
+                p.match = [p.match]
+            @patterns[name] = p
+        else
+            console.log "A pattern called #{name} already exists"
     
     receive: (user, command, respond) ->
         
@@ -11,15 +19,13 @@ module.exports = global.brain =
         # removes link references added by iChat
         command = command.trim().replace /\s?\<[^>]+\>/g, ''
 
-        matched = false
-        for own name, pattern of @patterns
-            for match in pattern.match
-                if matches = command.match match
-                    matched = true
-                    console.log "matched service: #{name}"
-                    pattern.fn user, matches, respond
-                    break
-                    break
+        matched = do ->
+            for own name, pattern of @patterns
+                for match, i in pattern.match
+                    if matches = command.match match
+                        console.log "matched service: #{name}"
+                        pattern.fn user, matches, respond
+                        return true
                     
         if not matched
             brain.wolframSearch command, (answer) ->

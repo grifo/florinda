@@ -29,7 +29,7 @@ twitterSearch = (query, respond) ->
 
 # search for shit on twitter
 # search shit on twitter
-brain.patterns.twitter =
+brain.addPattern 'twitter',
     match: [
         /search(?:\sfor)?\s(.+)\son\stwitter/i
         /(?:grab|get|take|find|pull)\s(.+)\s(?:on|from)\stwitter/i
