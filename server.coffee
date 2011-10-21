@@ -5,6 +5,7 @@ http     = require 'http'
 brain    = require './brains'
 request  = require 'request'
 { exec } = require 'child_process'
+program  = require 'commander'
 
 try
     config = JSON.parse fs.readFileSync './config.json', 'utf8'
@@ -13,14 +14,18 @@ catch e
 
 #####
 
-config.nochat ?= 'nochat' in process.argv
-config.silent ?= 'silent' in process.argv
+program
+  .version('0.0.1')
+  .option('-n, --nochat', "Don't send messages")
+  .option('-s, --silent', 'Start quietly')
+  .option('-u, --user [name]', 'Username for CLI/testing', 'John')
+  .parse process.argv
 
 sendChatMessage = (message) ->
 
     console.log "sending message: \n#{message}"
 
-    if config.nochat then return
+    if program.nochat then return
     
     chatURL = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
     
@@ -51,7 +56,7 @@ global.restartServer = () ->
 
 #####
 
-if not config.silent then sendChatMessage 'Hello!'
+if not program.silent then sendChatMessage 'Hello!'
 
 server = http.createServer (req, res) ->
 

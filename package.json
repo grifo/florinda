@@ -7,12 +7,13 @@
   },
   "main": "florinda.js",
   "engines": {
-    "node": "v0.4"
+    "node": "0.4"
   },
   "dependencies": {
-      "coffee-script": "",
-      "request": "",
-      "dom-js": ""
+      "coffee-script": "1.1",
+      "request": "2.1",
+      "dom-js": "0.0",
+      "commander": "0.2"
   },
   "devDependencies": {}
 }
