@@ -42,11 +42,13 @@ brain.wolframSearch = (query, respond) ->
                 message = null
                 
             try
-                [pods] = root.children.filter (node) -> node.name is 'pod'
-                subpods = pods.children.filter (node) -> node.name is 'subpod'
-                for subpod in subpods
-                    [text] = subpod.children.filter (node) -> node.name is 'plaintext'
-                    message += "\n#{[text.firstchild().text]}"
+                pods = root.children.filter (node) -> node.name is 'pod'
+                for pod in pods 
+                    subpods = pod.children.filter (node) -> node.name is 'subpod'
+                    for subpod in subpods
+                        [text] = subpod.children.filter (node) -> node.name is 'plaintext'
+                        message += "\n#{[text.firstchild().text]}"
             catch e
+                message += ''
         
         respond message
