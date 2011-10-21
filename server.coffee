@@ -29,6 +29,7 @@ catch e
 
 ## Make main objects global
 # yeah, I could keep passing stuff around...
+global.config   = config
 global.program  = program
 global.florinda = florinda
 global.brain    = brain
@@ -130,6 +131,6 @@ if program.cli
 
 ## Start HTTP server
 else
-    PORT = 3333
+    PORT = config.port or 3333
     server.listen PORT
     console.log "server running on port #{PORT}"
