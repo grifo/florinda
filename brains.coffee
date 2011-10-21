@@ -7,8 +7,11 @@ module.exports = global.brain =
     
     receive: (user, command, respond) ->
         
-        matched = false
+        ## clean-up command string
+        # removes link references added by iChat
+        command = command.trim().replace /\s?\<[^>]+\>/g, ''
 
+        matched = false
         for own name, pattern of @patterns
             for match in pattern.match
                 if matches = command.match match

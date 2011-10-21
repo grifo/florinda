@@ -1,5 +1,5 @@
 brain.patterns.reloadServer =
-    match: [/^(reload|restart)\syourself/i]
+    match: [/^(reload|restart)\s+?$/i]
     fn: (user, m, cb) ->
         switch m[1]
             when 'reload' then reloadServer()
