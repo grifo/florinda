@@ -3,7 +3,7 @@ request = require 'request'
 
 module.exports = 
 
-    say: (message) ->
+    say: (message, cb) ->
 
         console.log "sending message: \n#{message}" if program.verbose
 
@@ -15,6 +15,7 @@ module.exports =
         request.get chatURL, (err, response, body) ->
             if not err and response.statusCode is 200
                 console.log "answer sent" if program.verbose
+                cb()
             else
                 console.log "erro #{[err]}"
 
@@ -26,8 +27,8 @@ module.exports =
                 florinda.say "Failed to update :/"
             else
                 console.log stdout
-                florinda.say stdout.trim()
-                setTimeout restartServer, 1000
+                florinda.say stdout.trim(), ->
+                    florinda.restart()
         
     restart: ->
         exec 'forever restart florinda.js', (err, stdout, stderr) ->
