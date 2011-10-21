@@ -1,5 +1,6 @@
-qs      = require 'querystring'
-request = require 'request'
+qs       = require 'querystring'
+request  = require 'request'
+{ exec } = require 'child_process'
 
 module.exports = 
 
