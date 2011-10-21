@@ -6,6 +6,12 @@ request  = require 'request'
 { exec } = require 'child_process'
 program  = require 'commander'
 
+## Load config
+try
+    config = JSON.parse fs.readFileSync './config.json', 'utf8'
+catch e
+    config = {}
+
 florinda = require './system'
 brain    = require './brains'
 
@@ -20,12 +26,6 @@ program
 
 if program.cli
     program.nochat = program.silent = true
-
-## Load config
-try
-    config = JSON.parse fs.readFileSync './config.json', 'utf8'
-catch e
-    config = {}
 
 ## Make main objects global
 # yeah, I could keep passing stuff around...
