@@ -6,61 +6,43 @@ request  = require 'request'
 { exec } = require 'child_process'
 program  = require 'commander'
 
+florinda = require './system'
+brain    = require './brains'
+
+## Command-line options
 program
-    .version('0.0.1')
     .option('-n, --nochat', "Don't send messages")
     .option('-s, --silent', "Don't send greeting on start")
+    .option('-v, --verbose', "Verbose mode, useful for debugging requests")
+    .option('-c, --cli', "Command-line mode")
     .option('-u, --user [name]', 'Username for CLI/testing', 'John')
     .parse process.argv
 
-#####
+if program.cli
+    program.nochat = program.silent = true
 
-brain = require './brains'
-
+## Load config
 try
     config = JSON.parse fs.readFileSync './config.json', 'utf8'
 catch e
     config = {}
 
-#####
+## Make main objects global
+# yeah, I could keep passing stuff around...
+global.program  = program
+global.florinda = florinda
+global.brain    = brain
 
-sendChatMessage = (message) ->
-
-    console.log "sending message: \n#{message}"
-
-    if program.nochat then return
-    
-    chatURL = "http://partychat-hooks.appspot.com/post/p_ngvimtvm?" + qs.stringify({ message }).replace(/\'/g, '%27')
-    
-    console.log "requesting #{chatURL}"
-    request.get chatURL, (err, response, body) ->
-        if not err and response.statusCode is 200
-            console.log "answer sent"
-        else
-            console.log "erro #{[err]}"
+## Load commands
+for file in fs.readdirSync './commands'
+    if /^\w+\.coffee$/.test file
+        try
+            require "./commands/#{file}"
+            console.log "loaded #{file}" if program.verbose
+        catch e
+            console.log "error loading #{file}"
             
-#####
-
-global.reloadServer = (msg) ->
-    cb ?= ->
-    if not msg then sendChatMessage 'Restarting...'
-    exec 'git pull', (err, stdout, stderr) ->
-        if err
-            console.log "git pull failed"
-            cb "Failed to update :/"
-        else
-            console.log stdout
-            sendChatMessage msg or stdout
-            setTimeout restartServer, 1000
-        
-global.restartServer = () ->
-    exec 'forever restart florinda.js', (err, stdout, stderr) ->
-        if err then sendChatMessage "Aaaarrgh! I'm hurt"
-
-#####
-
-if not program.silent then sendChatMessage 'Hello!'
-
+## Create HTTP server
 server = http.createServer (req, res) ->
 
     pattern = ///
@@ -79,13 +61,13 @@ server = http.createServer (req, res) ->
         if params?.reload == '1' and params.key == config.key
             console.log "** RELOADING **"
             res.end "** RELOADING **"
-            reloadServer()
+            florinda.reload()
             return
         
         if params?.restart == '1' and params.key == config.key
             console.log "** RESTARTING **"
             res.end "** RESTARTING **"
-            restartServer()
+            florinda.restart()
             return
         
         command = params?.command
@@ -93,11 +75,6 @@ server = http.createServer (req, res) ->
         if command
             
             user = 'john'
-
-            console.log """
-            ****************************************
-            received command **#{command}**
-            """
             brain.receive user, command, (answer) ->
 
                 res.writeHead 200, { "Content-Type": 'text/plain' }
@@ -124,23 +101,35 @@ server = http.createServer (req, res) ->
             if payload and params?.reload == '1' and params.key == config.key
                 console.log "** RELOADING (push) **"
                 res.end "** RELOADING (push) **"
-                reloadServer "#{payload.commits[0]?.author.name} pushed to github, restarting..."
+                florinda.say "#{payload.commits[0]?.author.name} pushed to github, restarting..."
+                florinda.reload()
                 return
         
             query = qs.parse(body)?.body
             if query and matches = query.match(pattern)
             
                 [user, command] = matches.slice(1)
-        
-                console.log "received command #{command}"
-                brain.receive user, command, sendChatMessage
+                brain.receive user, command, florinda.say
                 return
             
             res.end()
 
-#####
 
-PORT = 3333
+## Hello!
+if not program.silent then florinda.say 'Hello!'
 
-server.listen PORT
-console.log "server running on port #{PORT}"
+## Enter command-line mode
+if program.cli
+    console.log "## Command-line mode:"
+    waitForInput = ->
+        program.prompt 'you: ', (command) ->
+            brain.receive program.user, command, (answer) -> 
+                console.log answer
+                waitForInput()
+    waitForInput()
+
+## Start HTTP server
+else
+    PORT = 3333
+    server.listen PORT
+    console.log "server running on port #{PORT}"

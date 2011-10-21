@@ -18,7 +18,7 @@ placeSearch = (query, respond) ->
         key: 'AIzaSyAScFFk5oTEMPRYDPalZdwTo1r9ocsN1hU'
     )
     
-    console.log "requesting #{url}"
+    console.log "requesting #{url}" if program.verbose
     request.get url, (err, resp, body) ->
         data = JSON.parse body
         

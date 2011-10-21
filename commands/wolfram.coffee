@@ -18,7 +18,7 @@ brain.wolframSearch = (query, respond) ->
         format : ['plaintext']
     )
     
-    console.log "requesting #{url}"
+    console.log "requesting #{url}" if program.verbose
     request.get url, (err, resp, body) ->
         
         parser = new DomJS
