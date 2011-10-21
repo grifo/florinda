@@ -2,10 +2,20 @@ fs       = require 'fs'
 qs       = require 'querystring'
 url      = require 'url'
 http     = require 'http'
-brain    = require './brains'
 request  = require 'request'
 { exec } = require 'child_process'
 program  = require 'commander'
+
+program
+    .version('0.0.1')
+    .option('-n, --nochat', "Don't send messages")
+    .option('-s, --silent', "Don't send greeting on start")
+    .option('-u, --user [name]', 'Username for CLI/testing', 'John')
+    .parse process.argv
+
+#####
+
+brain = require './brains'
 
 try
     config = JSON.parse fs.readFileSync './config.json', 'utf8'
@@ -13,13 +23,6 @@ catch e
     config = {}
 
 #####
-
-program
-  .version('0.0.1')
-  .option('-n, --nochat', "Don't send messages")
-  .option('-s, --silent', 'Start quietly')
-  .option('-u, --user [name]', 'Username for CLI/testing', 'John')
-  .parse process.argv
 
 sendChatMessage = (message) ->
 
