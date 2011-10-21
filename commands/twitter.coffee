@@ -15,7 +15,7 @@ twitterSearch = (query, respond) ->
         rpp : 3
     )
     
-    console.log "requesting #{url}"
+    console.log "requesting #{url}" if program.verbose
     request.get url, (err, resp, body) ->
         data = JSON.parse body
         

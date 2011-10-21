@@ -2,7 +2,7 @@ request = require 'request'
 qs      = require 'querystring'
 fs      = require 'fs'
 
-module.exports = global.brain =
+module.exports =
     patterns: {}
     addPattern: (name, p) ->
         if not @patterns[name]?
@@ -15,22 +15,25 @@ module.exports = global.brain =
     
     receive: (user, command, respond) ->
         
+        console.log "received command #{command}" if program.verbose
+        
         ## clean-up command string
         # removes link references added by iChat
         command = command.trim().replace /\s?\<[^>]+\>/g, ''
-
-        matched = do ->
+        
+        matched = do =>
             for own name, pattern of @patterns
                 for match, i in pattern.match
                     if matches = command.match match
-                        console.log "matched service: #{name}"
+                        console.log "matched service: #{name}" if program.verbose
                         pattern.fn user, matches, respond
                         return true
+            return false
                     
         if not matched
             brain.wolframSearch command, (answer) ->
                 return respond answer if answer
-                console.log "didn't understand #{command}"
+                console.log "I couldn't understand #{command}"  if program.verbose
                 answers = [
                     "I don't know what you're talking about"
                     "I don't understand"
@@ -38,13 +41,3 @@ module.exports = global.brain =
                     "WTF"
                 ]
                 respond answers[ Math.floor(Math.random() * (answers.length+.99)) ]
-
-
-# load brain files
-for file in fs.readdirSync './commands'
-    if /^\w+\.coffee$/.test file
-        try
-            console.log "loaded #{file}"
-            require "./commands/#{file}"
-        catch e
-            console.log "error loading #{file}"
