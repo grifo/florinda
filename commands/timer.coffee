@@ -70,14 +70,14 @@ setSayTimer = (time, text, user, respond) ->
         setTimeout (-> respond "#{text}"), time
         respond "Ok."
         
-brain.patterns.timer =
+brain.addPattern 'timer',
     match: [/set\s(timer|alarm|reminder)(\sto)?(.+)/i]
     fn: (user, m, cb) -> setTimer m[3], user, cb
     
-brain.patterns.reminder =
+brain.addPattern 'reminder',
     match: [/remind\sme\s(to|of|about)\s(.+)\sin\s(.+)/i]
     fn: (user, m, cb) -> setReminder m[3], m[2], user, cb
     
-brain.patterns.sayTimer =
+brain.addPattern 'sayTimer',
     match: [/say\s(.+)\sin\s(.+)/i]
     fn: (user, m, cb) -> setSayTimer m[2], m[1], user, cb

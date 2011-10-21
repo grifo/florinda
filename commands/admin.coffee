@@ -1,4 +1,4 @@
-brain.patterns.reloadServer =
+brain.addPattern 'reloadServer',
     match: [/^(reload|restart)\s+?$/i]
     fn: (user, m, cb) ->
         switch m[1]
