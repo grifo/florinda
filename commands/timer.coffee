@@ -76,7 +76,7 @@ brain.addPattern 'timer',
     
 brain.addPattern 'reminder',
     match: [/remind\s(.+)\s(to|of|about)\s(.+)\sin\s(.+)/i]
-    fn: (user, m, cb) -> setReminder m[4], m[3], if m[2] == 'me' then user else m[2], cb
+    fn: (user, m, cb) -> setReminder m[4], m[3], (if m[1] == 'me' then user else m[1]), cb
     
 brain.addPattern 'sayTimer',
     match: [/say\s(.+)\sin\s(.+)/i]
