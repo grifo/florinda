@@ -8,9 +8,9 @@ program  = require 'commander'
 
 ## Load config
 try
-    config = JSON.parse fs.readFileSync './config.json', 'utf8'
+    global.config = JSON.parse fs.readFileSync './config.json', 'utf8'
 catch e
-    config = {}
+    global.config = {}
 
 florinda = require './system'
 brain    = require './brains'
@@ -29,7 +29,6 @@ if program.cli
 
 ## Make main objects global
 # yeah, I could keep passing stuff around...
-global.config   = config
 global.program  = program
 global.florinda = florinda
 global.brain    = brain
