@@ -3,7 +3,6 @@ qs       = require 'querystring'
 url      = require 'url'
 http     = require 'http'
 request  = require 'request'
-{ exec } = require 'child_process'
 program  = require 'commander'
 
 ## Load config
