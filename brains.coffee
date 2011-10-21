@@ -12,6 +12,31 @@ module.exports =
             @patterns[name] = p
         else
             console.log "A pattern called #{name} already exists"
+            
+    Act: class Act
+        constructor: (@answers = [], @phrases = []) ->
+            @line = 0
+
+        nextLine: (stage, user, respond) ->
+            if @line isnt stage
+                respond '...'
+                return
+            answer = @answers[@line].replace '$user', user
+            @line += 1
+            @line = 0 if @line >= @answers.length
+            respond answer
+            # reset line after 30 seconds
+            setTimeout (=> @line = 0), 15000
+            return
+
+        match: (input) ->
+            for phrase, i in @phrases when phrase.test input
+                return i
+    
+    addAct: (name, act) ->
+        brain.addPattern name,
+            match: act.phrases
+            fn: (user, m, cb) -> act.nextLine m.index, user, cb
     
     receive: (user, command, respond) ->
         
@@ -25,6 +50,7 @@ module.exports =
             for own name, pattern of @patterns
                 for match, i in pattern.match
                     if matches = command.match match
+                        matches.index = i
                         console.log "matched service: #{name}" if program.verbose
                         pattern.fn user, matches, respond
                         return true
