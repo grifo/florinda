@@ -46,12 +46,12 @@ for file in fs.readdirSync './commands'
 server = http.createServer (req, res) ->
 
     pattern = ///
-        \[             # opening bracket
-        ([^\]]+)       # user name (anything NOT a closing bracket)
-        \]             # closing bracket
-        \s             # space
-        @florinda\s?   # partyhook pattern + optional space
-        (.+)           # command given
+        \[              # opening bracket
+        ([^\]]+)        # user name (anything NOT a closing bracket)
+        \]              # closing bracket
+        \s              # space
+        @florinda\,?\s? # partyhook pattern + optional space
+        (.+)            # command given
     ///
     
     params = url.parse(req.url, true).query
