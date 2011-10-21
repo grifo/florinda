@@ -34,22 +34,21 @@ brain.wolframSearch = (query, respond) ->
                         node.name is 'pod' and
                         node.attributes.id is 'Input'
 
-                [subpod] = result.children.filter (node) -> node.name is 'subpod'
-                [text] = subpod.children.filter (node) -> node.name is 'plaintext'
+                [rsubpod] = result.children.filter (node) -> node.name is 'subpod'
+                [rtext] = rsubpod.children.filter (node) -> node.name is 'plaintext'
 
-                message = text.firstChild().text
+                message = rtext.firstChild().text
             catch e
                 message = null
                 
             try
-                pods = root.children.filter (node) -> node.name is 'pod'
-                for pod in pods 
+                pods = root.children.filter (node) -> node.name is 'pod' and node.attributes.id isnt 'Result'
+                for pod in pods
                     subpods = pod.children.filter (node) -> node.name is 'subpod'
                     for subpod in subpods
                         [text] = subpod.children.filter (node) -> node.name is 'plaintext'
                         message += "\n#{[text.firstChild().text]}"
             catch e
-                console.log e
                 message += ''
         
         respond message
