@@ -47,8 +47,9 @@ brain.wolframSearch = (query, respond) ->
                     subpods = pod.children.filter (node) -> node.name is 'subpod'
                     for subpod in subpods
                         [text] = subpod.children.filter (node) -> node.name is 'plaintext'
-                        message += "\n#{[text.firstchild().text]}"
+                        message += "\n#{[text.firstChild().text]}"
             catch e
+                console.log e
                 message += ''
         
         respond message
