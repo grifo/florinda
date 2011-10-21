@@ -15,7 +15,7 @@ module.exports =
         request.get chatURL, (err, response, body) ->
             if not err and response.statusCode is 200
                 console.log "answer sent" if program.verbose
-                cb()
+                cb?()
             else
                 console.log "erro #{[err]}"
 
