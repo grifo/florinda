@@ -60,7 +60,7 @@ server = http.createServer (req, res) ->
         ([^\]]+)       # user name (anything NOT a closing bracket)
         \]             # closing bracket
         \s             # space
-        florinda\,\s?  # partyhook pattern + optional space
+        @florinda\s?   # partyhook pattern + optional space
         (.+)           # command given
     ///
     
@@ -85,7 +85,6 @@ server = http.createServer (req, res) ->
         if command
             
             user = 'john'
-            #command = command.replace /\s?\<.+\>\/g, ''
 
             console.log """
             ****************************************
@@ -124,8 +123,6 @@ server = http.createServer (req, res) ->
             if query and matches = query.match(pattern)
             
                 [user, command] = matches.slice(1)
-                # remove link references added by iChat
-                command = command.replace /\s?\<.+\>/g, ''
         
                 console.log "received command #{command}"
                 brain.receive user, command, sendChatMessage
