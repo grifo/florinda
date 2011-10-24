@@ -34,7 +34,7 @@ global.brain    = brain
 
 ## Load commands
 for file in fs.readdirSync './commands'
-    if /^\w+\.coffee$/.test file
+    if /^[\w-_]+\.coffee$/.test file
         try
             require "./commands/#{file}"
             console.log "loaded #{file}" if program.verbose
