@@ -18,12 +18,12 @@ svnExport = (repo, respond) ->
 
     validate repo, ->
         
-        options = '-q --no-auth-cache --username florinda --password chespirito'
-        exec "svn export #{options} svn://localhost/#{repo} /home/grifo/Arquivos/www/preview/#{repo}", (err, stdout, stderr) ->
+        options = "-q --no-auth-cache --username #{config.svn.username} --password #{config.svn.password}"
+        exec "svn export #{options} svn://#{config.svn.url}/#{repo} #{config.svn.path}/#{repo}", (err, stdout, stderr) ->
             if err
                 respond "Something bad happened while exporting 0_0"
             else
-                respond "Exported to http://grifo.dyndns.tv/preview/#{repo}"
+                respond "Exported to http://#{config.svn.public}/preview/#{repo}"
             return
 
 svnLog = (repo, respond) ->
@@ -39,9 +39,9 @@ svnLog = (repo, respond) ->
             return
 
 brain.addPattern 'svn export',
-    match: [/^svn\sexport\s(.+)/i]
+    match: /^svn\sexport\s(.+)/i
     fn: (user, m, cb) -> svnExport m[1], cb
 
 brain.addPattern 'svn log',
-    match: [/^svn\slog\s(.+)/i]
+    match: [/^svn\slog\s(.+)/i
     fn: (user, m, cb) -> svnLog m[1], cb
