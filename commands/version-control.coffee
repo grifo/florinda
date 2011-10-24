@@ -43,5 +43,5 @@ brain.addPattern 'svn export',
     fn: (user, m, cb) -> svnExport m[1], cb
 
 brain.addPattern 'svn log',
-    match: [/^svn\slog\s(.+)/i
+    match: /^svn\slog\s(.+)/i
     fn: (user, m, cb) -> svnLog m[1], cb
