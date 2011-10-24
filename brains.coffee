@@ -5,6 +5,10 @@ fs      = require 'fs'
 module.exports =
     # returns a random one from an array of strings
     anyOf: (answers) -> answers[ Math.floor(Math.random() * (answers.length+.99)) ]
+    # confirm some action
+    queued: []
+    confirm: (obj) ->
+        @queued.push obj #{ confirmMessage, cancelMessage, fn, args }
     # detection patterns
     patterns: {}
     addPattern: (name, p) ->
@@ -50,6 +54,19 @@ module.exports =
         command = command.trim().replace /\s?\<[^>]+\>/g, ''
         
         matched = do =>
+            # confirmations
+            if brain.queued.length > 0
+                console.log command
+                if /^yes|yeah|sure|ok(\s\!\.;)*$/i.test command
+                    service = brain.queued.pop()
+                    florinda.say service.confirmMessage
+                    service.fn?.apply null, service.args
+                    return true
+                else if /^no|nope|not|cancel|stop(\s\!\.;)*$/i.test command
+                    service = brain.queued.pop()
+                    florinda.say service.cancelMessage or "Canceled."
+                    return true
+            
             for own name, pattern of @patterns
                 for match, i in pattern.match
                     if matches = command.match match
