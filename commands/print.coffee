@@ -52,7 +52,7 @@ printFile = (user, url, respond) ->
         if ext in "doc|ppt|pps|xls|odt|ods|odp".split('|')
             command = "openoffice -headless -norestore -p '#{path}'"
         else
-            command = "lpr -P nhonho '#{path}'"
+            command = "lpr '#{path}'"
         
         florinda.say "Printing #{filename}.#{ext}"
         exec command, (err, stdout, stderr) ->
