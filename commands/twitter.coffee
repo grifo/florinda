@@ -6,6 +6,8 @@ decode  = require '../lib/entity_decode'
 Twitter search
 ###
 
+n_tweets = 3
+
 `
 function relativeTime(dat){
 	var s = ~~( (+new Date-Date.parse(dat)) / 1000 );
@@ -23,14 +25,24 @@ function relativeTime(dat){
 };
 `
 
-twitterSearch = (query, respond) ->
-
-    message = ''
-    
-    url = 'http://search.twitter.com/search.json?' + qs.stringify(
+searchByString = (query, respond) ->
+    twitterSearch {
         q   : query
-        rpp : 3
-    )
+        rpp : n_tweets
+    }, respond
+    
+searchByUser = (user, plural, n, respond) ->
+    if not n
+        n = if not plural then 1 else n_tweets
+    twitterSearch {
+        q   : "from:#{user.replace('@', '')}"
+        rpp : n or 1
+    }, respond
+    
+twitterSearch = (params, respond) ->
+    
+    message = ''
+    url = 'http://search.twitter.com/search.json?' + qs.stringify(params)
     
     console.log "requesting #{url}" if program.verbose
     request.get url, (err, resp, body) ->
@@ -53,5 +65,14 @@ brain.addPattern 'twitter',
         /(?:grab|get|take|find|pull)\s(.+)\s(?:on|from)\stwitter/i
         /search\stwitter(?:\sfor)?\s(.+)/i
     ]
-    fn: (user, m, cb) -> twitterSearch m[1], cb
+    fn: (user, m, cb) -> searchByString m[1], cb
+    
+# get tweets from @user
+# get 5 tweets from user
+# get last tweet from user
+brain.addPattern 'twitterUser',
+    match: [
+        /(?:grab|get|take|find|pull)\s?(\d+|last|latest)?\stweet(s?)\s(?:from|by)\s(\S+)/i
+    ]
+    fn: (user, m, cb) -> searchByUser m[3], m[2], m[1], cb
 
