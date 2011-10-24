@@ -100,7 +100,7 @@ server = http.createServer (req, res) ->
             if payload and params?.reload == '1' and params.key == config.key
                 console.log "** RELOADING (push) **"
                 res.end "** RELOADING (push) **"
-                florinda.say "#{payload.commits[0]?.author.name} pushed to github, restarting...", ->
+                florinda.say "#{payload.commits[0]?.author.name} pushed to github, reloading...", ->
                     florinda.reload()
                 return
         
