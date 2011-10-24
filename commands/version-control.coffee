@@ -38,8 +38,6 @@ svnLog = (repo, respond) ->
                 respond stdout
             return
 
-console.log config
-
 brain.addPattern 'svn export',
     match: /^svn\sexport\s(.+)/i
     fn: (user, m, cb) -> svnExport m[1], cb
