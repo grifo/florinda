@@ -6,6 +6,23 @@ decode  = require '../lib/entity_decode'
 Twitter search
 ###
 
+`
+function relativeTime(dat){
+	var s = ~~( (+new Date-Date.parse(dat)) / 1000 );
+	// unidade de tempo
+	var un = (s<60) ? 'second'
+		: (s /= 60)<60 ? 'minute'
+		: (s /= 60)<24 ? 'hour'
+		: (s /= 24)<30.4 ? 'day'
+		: (s /= 30.4)<365 ? 'month'
+		: 'ano';
+	s = Math.floor(s);
+	un += (s>1 || s == 0) ? 's' : '';
+	
+	  return s + ' ' + un + ' ago';
+};
+`
+
 twitterSearch = (query, respond) ->
 
     message = ''
@@ -21,7 +38,8 @@ twitterSearch = (query, respond) ->
         
         if data.results
             for tweet in data.results
-                message += "#{tweet.from_user}: #{decode tweet.text}\n"
+                created = tweet.created_at
+                message += "#{tweet.from_user}: #{decode tweet.text} (#{relativeTime created})\n"
         else
             message = "I'm sorry, nothing found for '#{query}' on twitter."
         
@@ -36,3 +54,4 @@ brain.addPattern 'twitter',
         /search\stwitter(?:\sfor)?\s(.+)/i
     ]
     fn: (user, m, cb) -> twitterSearch m[1], cb
+
