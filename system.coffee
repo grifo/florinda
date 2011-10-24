@@ -20,7 +20,7 @@ module.exports =
             else
                 console.log "erro #{[err]}"
 
-    reload: () ->
+    reload: (msg) ->
         if not msg then florinda.say 'Restarting...'
         exec 'git pull', (err, stdout, stderr) ->
             if err
