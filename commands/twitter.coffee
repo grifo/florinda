@@ -32,8 +32,10 @@ searchByString = (query, respond) ->
     }, respond
     
 searchByUser = (user, plural, n, respond) ->
-    if not n
-        n = if not plural then 1 else n_tweets
+    if not n?
+        n = if plural then n_tweets else 1
+    else if isNaN n
+        n = 1
     twitterSearch {
         q   : "from:#{user.replace('@', '')}"
         rpp : n or 1
