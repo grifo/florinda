@@ -18,7 +18,7 @@ svnExport = (repo, respond) ->
 
     validateRepo repo, respond, ->
         
-        options = "-q --no-auth-cache --username #{config.svn.username} --password #{config.svn.password}"
+        options = "-q --force --no-auth-cache --username #{config.svn.username} --password #{config.svn.password}"
         exec "svn export #{options} svn://#{config.svn.url}/#{repo} #{config.svn.path}/#{repo}", (err, stdout, stderr) ->
             if err
                 respond "Something bad happened while exporting 0_0"
@@ -37,6 +37,8 @@ svnLog = (repo, respond) ->
             else
                 respond stdout
             return
+
+console.log config
 
 brain.addPattern 'svn export',
     match: /^svn\sexport\s(.+)/i
