@@ -3,6 +3,9 @@ qs      = require 'querystring'
 fs      = require 'fs'
 
 module.exports =
+    # returns a random one from an array of strings
+    anyOf: (answers) -> answers[ Math.floor(Math.random() * (answers.length+.99)) ]
+    # detection patterns
     patterns: {}
     addPattern: (name, p) ->
         if not @patterns[name]?
@@ -60,10 +63,16 @@ module.exports =
             brain.wolframSearch command, (answer) ->
                 return respond answer if answer
                 console.log "I couldn't understand #{command}"  if program.verbose
-                answers = [
-                    "I don't know what you're talking about"
-                    "I don't understand"
+                respond brain.anyOf [
+                    "I don't know what you're talking about."
+                    "I have no idea what you are talking about."
+                    "What the fuck is wrong with you?"
+                    "I wish I could understand you."
+                    "I don't understand."
                     "What do you mean?"
-                    "WTF"
+                    "WTF!"
+                    "There's only so much I can do."
+                    "You're annoying."
+                    "Leave me alone."
+                    "I don't feel like it."
                 ]
-                respond answers[ Math.floor(Math.random() * (answers.length+.99)) ]
