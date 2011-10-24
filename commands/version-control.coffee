@@ -16,7 +16,7 @@ validateRepo = (repo, respond, next) ->
 
 svnExport = (repo, respond) ->
 
-    validate repo, ->
+    validateRepo repo, ->
         
         options = "-q --no-auth-cache --username #{config.svn.username} --password #{config.svn.password}"
         exec "svn export #{options} svn://#{config.svn.url}/#{repo} #{config.svn.path}/#{repo}", (err, stdout, stderr) ->
@@ -28,7 +28,7 @@ svnExport = (repo, respond) ->
 
 svnLog = (repo, respond) ->
 
-    validate repo, ->
+    validateRepo repo, ->
         
         options = '-l 3 --no-auth-cache --username florinda --password chespirito'
         exec "svn log #{options} svn://localhost/#{repo}", (err, stdout, stderr) ->
