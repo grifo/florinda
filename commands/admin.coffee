@@ -7,3 +7,7 @@ brain.addPattern 'reloadServer',
         else if m[1] is 'restart'
             florinda.say "Restarting..."
             florinda.restart()
+            
+brain.addPattern 'say',
+    match: [/^say\s(.*)/i]
+    fn: (user, m, cb) -> cb m[1]
