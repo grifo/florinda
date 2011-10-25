@@ -2,9 +2,7 @@ request = require 'request'
 qs      = require 'querystring'
 decode  = require '../lib/entity_decode'
 
-###
-Twitter search
-###
+## Twitter search
 
 n_tweets = 3
 
