@@ -1,6 +1,4 @@
-###
-Open the pod bay doors
-###
+## Absolutely required
 
 brain.addAct 'openPodBayDoors', new brain.Act [
     "I'm sorry $user. I'm afraid I can't do that."

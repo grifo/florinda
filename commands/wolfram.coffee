@@ -4,8 +4,14 @@ qs        = require 'querystring'
 
 API_KEY = '3EWK75-KVARQJH55Q'
 
+## Wolfram Alpha
+
 ###
-Wolfram Alpha
+TODO:
+ - find a decent XML module with DOM methods
+ - handle different types of pods more intelligently
+   (http://products.wolframalpha.com/api/documentation.html)
+ - rewrite everything
 ###
 
 brain.wolframSearch = (query, respond) ->
