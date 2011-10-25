@@ -1,91 +1,329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta charset='utf-8'>
-
-  <title>grifo/florinda @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #fc6c55;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #0393aa; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #0393aa; }
-    h3 { text-align: center; color: #0393aa; }
-    a { color: #0393aa; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
-<body>
-  <a href="http://github.com/grifo/florinda"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/grifo/florinda/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/grifo/florinda/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/grifo/florinda">florinda</a>
-      <span class="small">by <a href="http://github.com/grifo">grifo</a></span></h1>
-
-    <div class="description">
-      Office chatbot
-    </div>
-
-    <h2>Dependencies</h2>
-<p>node.js
-npm
-partychat app</p>
-<h2>License</h2>
-<p>MIT</p>
-<h2>Authors</h2>
-<p>Ricardo Tomasi (@ricardobeat)</p>
-<h2>Contact</h2>
-<p>(ricardo@gri.fo)</p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/grifo/florinda/zipball/master">zip</a> or
-      <a href="http://github.com/grifo/florinda/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/grifo/florinda</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/grifo/florinda">grifo/florinda</a>
-    </div>
-
-  </div>
-
-  <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<meta charset="utf-8">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+code,
+em,
+strong,
+li,
+ol,
+ul,
+table,
+th,
+td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100%;
+    line-height: 1;
+    font-family: inherit;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+ol, ul {
+    list-style: none;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 18px;
+    color: #737373;
+    margin: 24px;
+}
+a {
+    color: #0069d6;
+    text-decoration: none;
+    line-height: inherit;
+    font-weight: inherit;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: underline;
+}
+a img {
+    border: none;
+}
+p {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 18px;
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+    color: #404040;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+    line-height: 36px;
+}
+h2 {
+    font-size: 24px;
+    line-height: 36px;
+}
+h3,
+h4,
+h5,
+h6 {
+    line-height: 36px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+ul, ol {
+    margin: 0 0 18px 25px;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+    margin-bottom: 0;
+}
+ul {
+    list-style: disc;
+}
+ol {
+    list-style: decimal;
+}
+li {
+    line-height: 18px;
+    color: #808080;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #eee;
+}
+strong {
+    font-style: inherit;
+    font-weight: bold;
+    line-height: inherit;
+}
+em {
+    font-style: italic;
+    font-weight: inherit;
+    line-height: inherit;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eeeeee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    padding: 0 3px 2px;
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px dashed #ccc;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fdfdfd;
+    color:#737373;
+    font-size: 11px;
+}
+table {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 0;
+    border-collapse: separate;
+    font-size: 13px;
+}
+table th, table td {
+    padding: 10px 10px 9px;
+    line-height: 13.5px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+}
+table th {
+    padding-top: 9px;
+    font-weight: bold;
+    border-bottom-width: 2px;
+}
+@media screen and (min-width: 848px) {
+		body {
+			width: 800px;
+            margin:24px auto;
+		}
+}
+</style>
+<title>florinda | gri.fo</title>
 <script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-26554937-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26554937-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<h1>Florinda</h1>
+
+<p>A bot for our office chat room.</p>
+
+<p>Inspired by <a href="https://github.com/blog/968-say-hello-to-hubot">Hubot</a> &ndash; thanks github :)</p>
+
+<h2>Dependencies</h2>
+
+<ul>
+<li><a href="http://nodejs.org">node.js</a> (v4)</li>
+<li><a href="http://npmjs.org">npm</a></li>
+<li><a href="https://github.com/indexzero/forever">forever</a> (used by default for auto-restart)</li>
+</ul>
+
+
+<h2>Chat room</h2>
+
+<p>Currently it only interfaces with Party Chat (GTalk groups &ndash; http://partychapp.appspot.com) via partychat-hooks.appspot.com, but it&rsquo;d be easy to turn it into an IRC or Jabber bot.</p>
+
+<h2>What can she do?</h2>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-hello.png" alt="" /></p>
+
+<p>Remind you of coffee time:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-reminder.png" alt="" /></p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-coffee.png" alt="" /></p>
+
+<p>Export from an SVN repository:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-svn.png" alt="" /></p>
+
+<p>Set simple timers:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-timer.png" alt="" /></p>
+
+<p>Search twitter:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-twitter.png" alt="" /></p>
+
+<p>Search Google Places:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-places.png" alt="" /></p>
+
+<p>Answer about general facts:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-reload.png" alt="" /></p>
+
+<p>(that&rsquo;s Wolfram Alpha).</p>
+
+<p>She reloads itself when you add a script:</p>
+
+<p><img src="http://grifo.github.com/florinda/images/florinda-reload.png" alt="" /></p>
+
+<p>New commands can be added to the <strong>/comands</strong> folder. Take a look at <code>places.coffee</code> for a simple example.</p>
+
+<h2>Installing</h2>
+
+<ol>
+<li><code>git clone http://github.com/grifo/florinda</code> to your favorite folder.</li>
+<li>create a <code>config.json</code> file as shown below</li>
+<li>configure a hook at http://partychat-hooks.appspot.com with the pattern <em>@florinda</em></li>
+<li>point the POST url to her public address</li>
+<li><code>forever start florinda.js -vs</code> (will run on port 3333 by default)</li>
+</ol>
+
+
+<p>Alternatively you can run it on the command-line with <code>node florinda.js --cli</code> without setting a webhook.</p>
+
+<p><code>node florinda.js --help</code> will show you all available options.</p>
+
+<h3>config.json</h3>
+
+<p>(defaults needed for the bundled commands)</p>
+
+<pre><code>{
+    "key": "supersecretkey",
+    "messageURL": "http://partychat-hooks.appspot.com/post/p_xxxx",
+    "wolfram": {
+        "apiKey":"1A2B3C"
+    },
+    "svn": {
+        "username": "user",
+        "password": "12345",
+        "url": "192.168.1.99",
+        "path": "/var/www/clients",
+        "public": "mydomain.com"
+    }
+}
+</code></pre>
+
+<hr />
+
+<p>Siga @grifotecnologia e @ricardobeat no twitter :)</p>
 </body>
 </html>
