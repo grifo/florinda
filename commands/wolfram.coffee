@@ -2,8 +2,6 @@ request   = require 'request'
 qs        = require 'querystring'
 { DomJS } = require 'dom-js'
 
-API_KEY = '3EWK75-KVARQJH55Q'
-
 ## Wolfram Alpha
 
 ###
@@ -20,7 +18,7 @@ brain.wolframSearch = (query, respond) ->
     
     url = 'http://api.wolframalpha.com/v2/query?' + qs.stringify(
         input  : query
-        appid  : API_KEY
+        appid  : config.wolfram.apiKey
         format : ['plaintext']
     )
     
