@@ -214,20 +214,7 @@ table th {
 		}
 }
 </style>
-<title>florinda | gri.fo</title>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-26554937-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+<title>index.html</title>
 </head>
 <body>
 <h1>Florinda</h1>
@@ -244,6 +231,8 @@ table th {
 <li><a href="https://github.com/indexzero/forever">forever</a> (used by default for auto-restart)</li>
 </ul>
 
+
+<p>Some commands have their own dependencies, choose what you want to use.</p>
 
 <h2>Chat room</h2>
 
@@ -279,21 +268,32 @@ table th {
 
 <p><img src="http://grifo.github.com/florinda/images/florinda-reload.png" alt="" /></p>
 
-<p>(that&rsquo;s Wolfram Alpha).</p>
+<p>Any commands that don&rsquo;t match anything are sent to Wolfram Alpha as a last attempt.</p>
 
-<p>She reloads itself when you add a script:</p>
+<h3>Other commands</h3>
 
-<p><img src="http://grifo.github.com/florinda/images/florinda-reload.png" alt="" /></p>
+<ul>
+<li><em>say blah in 10 seconds</em> (for creeping out people)</li>
+<li><em>print http://xxx.com/file.pdf</em> (uses lpr/openoffice)</li>
+<li><em>get someword from twitter</em></li>
+<li><em>get 5 tweets from jamieoliver</em></li>
+<li><em>get latest tweet by @zeldman</em></li>
+<li><em>restart</em></li>
+<li><em>reload</em> (performs a <code>git pull</code> from this repo + restart)</li>
+</ul>
+
 
 <p>New commands can be added to the <strong>/comands</strong> folder. Take a look at <code>places.coffee</code> for a simple example.</p>
 
 <h2>Installing</h2>
 
 <ol>
-<li><code>git clone http://github.com/grifo/florinda</code> to your favorite folder.</li>
+<li><code>git clone http://github.com/grifo/florinda</code> to your favorite folder</li>
+<li>run <code>npm install</code></li>
+<li>get a <a href="http://products.wolframalpha.com/api/">Wolfram Alpha API Key</a></li>
 <li>create a <code>config.json</code> file as shown below</li>
-<li>configure a hook at http://partychat-hooks.appspot.com with the pattern <em>@florinda</em></li>
-<li>point the POST url to her public address</li>
+<li><a href="http://partychat-hooks.appspot.com">configure a hook</a> with the pattern <em>@florinda</em></li>
+<li>point the POST URL to her public server address</li>
 <li><code>forever start florinda.js -vs</code> (will run on port 3333 by default)</li>
 </ol>
 
