@@ -10,6 +10,8 @@ Inspired by [Hubot](https://github.com/blog/968-say-hello-to-hubot) - thanks git
 * [npm](http://npmjs.org)
 * [forever](https://github.com/indexzero/forever) (used by default for auto-restart)
 
+Some commands have their own dependencies, choose what you want to use.
+
 ## Chat room
 
 Currently it only interfaces with Party Chat (GTalk groups - http://partychapp.appspot.com) via partychat-hooks.appspot.com, but it'd be easy to turn it into an IRC or Jabber bot.
@@ -44,21 +46,28 @@ Answer about general facts:
 
 ![](http://grifo.github.com/florinda/images/florinda-reload.png)
 
-(that's Wolfram Alpha).
+Any commands that don't match anything are sent to Wolfram Alpha as a last attempt.
 
-She reloads itself when you add a script:
-
-![](http://grifo.github.com/florinda/images/florinda-reload.png)
+### Other commands
+* *say blah in 10 seconds* (for creeping out people)
+* *print http://xxx.com/file.pdf* (uses lpr/openoffice)
+* *get someword from twitter*
+* *get 5 tweets from jamieoliver*
+* *get latest tweet by @zeldman*
+* *restart* 
+* *reload* (performs a `git pull` from this repo + restart)
 
 New commands can be added to the **/comands** folder. Take a look at `places.coffee` for a simple example.
 
 ## Installing
 
-1. `git clone http://github.com/grifo/florinda` to your favorite folder.
-2. create a `config.json` file as shown below
-3. configure a hook at http://partychat-hooks.appspot.com with the pattern *@florinda*
-4. point the POST url to her public address
-4. `forever start florinda.js -vs` (will run on port 3333 by default)
+1. `git clone http://github.com/grifo/florinda` to your favorite folder
+2. run `npm install`
+3. get a [Wolfram Alpha API Key](http://products.wolframalpha.com/api/)
+4. create a `config.json` file as shown below
+5. [configure a hook](http://partychat-hooks.appspot.com) with the pattern *@florinda*
+6. point the POST URL to her public server address
+7. `forever start florinda.js -vs` (will run on port 3333 by default)
 
 Alternatively you can run it on the command-line with `node florinda.js --cli` without setting a webhook.
 
