@@ -42,9 +42,9 @@ Search Google Places:
 
 ![](http://grifo.github.com/florinda/images/florinda-places.png)
 
-Answer about general facts:
+Answer enthusiastically to interesting questions:
 
-![](http://grifo.github.com/florinda/images/florinda-reload.png)
+![](http://grifo.github.com/florinda/images/florinda-wolfram.png)
 
 Any commands that don't match anything are sent to Wolfram Alpha as a last attempt.
 
