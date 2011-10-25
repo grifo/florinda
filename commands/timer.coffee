@@ -61,7 +61,7 @@ setTimer = (time, user, respond) ->
 setReminder = (time, text, user, respond) ->
     time = parseTimeString time
     if time
-        setTimeout (-> respond "#{user}, #{text} now."), time
+        setTimeout (-> respond "@#{user}, #{text} now."), time
         respond "Ok, I'll remind you."
 
 setSayTimer = (time, text, user, respond) ->
