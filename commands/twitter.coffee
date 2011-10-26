@@ -61,9 +61,9 @@ twitterSearch = (params, respond) ->
 # search shit on twitter
 brain.addPattern 'twitter',
     match: [
-        /search(?:\sfor)?\s(.+)\son\stwitter/i
-        /(?:grab|get|take|find|pull)\s(.+)\s(?:on|from)\stwitter/i
-        /search\stwitter(?:\sfor)?\s(.+)/i
+        /search (?:for )?(.+) on twitter/i
+        /(?:grab|get|take|find|pull) (.+) ?(?:on|from) twitter/i
+        /search twitter (?:for )?(.+)/i
     ]
     fn: (user, m, cb) -> searchByString m[1], cb
     
@@ -72,7 +72,7 @@ brain.addPattern 'twitter',
 # get last tweet from user
 brain.addPattern 'twitterUser',
     match: [
-        /(?:grab|get|take|find|pull)\s?(\d+|last|latest)?\stweet(s?)\s(?:from|by)\s(\S+)/i
+        /(?:grab|get|take|find|pull) ?(\d+|last|latest)? tweet(s?) (?:from|by) (\S+)/i
     ]
     fn: (user, m, cb) -> searchByUser m[3], m[2], m[1], cb
 
