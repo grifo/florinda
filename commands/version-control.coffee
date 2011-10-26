@@ -41,9 +41,9 @@ svnLog = (repo, respond) ->
             return
 
 brain.addPattern 'svn export',
-    match: /^svn\sexport\s(.+)/i
+    match: /^svn export (.+)/i
     fn: (user, m, cb) -> svnExport m[1], cb
 
 brain.addPattern 'svn log',
-    match: /^svn\slog\s(.+)/i
+    match: /^svn log (.+)/i
     fn: (user, m, cb) -> svnLog m[1], cb
