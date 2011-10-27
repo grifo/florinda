@@ -11,3 +11,13 @@ brain.addAct 'openPodBayDoors', new brain.Act [
     /what are you talking about\?*/i
     /I don'?t know what you('?re| are) talking about/i
 ]
+
+brain.addAct 'astley', new brain.Act [
+    "Never gonna let you down"
+    "Never gonna make you cry"
+    "Never gonna tell a lie and hurt you"
+], [
+    /(I'?m )?Never gonna give (you|u) up/i
+    /(I'?m )?Never gonna run around (and|n) desert (you|u)/i
+    /(I'?m )?Never gonna say goodbye/i
+]
