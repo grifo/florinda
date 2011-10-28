@@ -2,7 +2,7 @@
 
 A bot for our office chat room.
 
-Inspired by [Hubot](https://github.com/blog/968-say-hello-to-hubot) - thanks github :)
+Inspired by [Zach Holman's post on Hubot](https://github.com/blog/968-say-hello-to-hubot) - thanks :)
 
 ## Dependencies
 
