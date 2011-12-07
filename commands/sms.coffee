@@ -52,10 +52,12 @@ sendMessage = (numbers, message, user, respond) ->
             
             if body is 'ok'
                 sent++
+                if sent is numbers.length
+                    respond "#{sent} #{if sent is 1 then 'message' else 'messages'} sent (#{numbers.join(', ')})."
             else
                 respond "Error: #{body}"
                 
-    respond "#{sent} #{if sent is 1 then 'message' else 'messages'} sent (#{numbers.join(', ')})."
+            
         
 # message 5199998888 puta que pariu pra fora
 # message jean, vitor bla bla blabla
