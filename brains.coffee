@@ -25,7 +25,6 @@ module.exports =
             @line = 0
 
         nextLine: (stage, user, respond) ->
-            console.log @line, stage, @answers.length
             if @line isnt stage
                 respond '...'
                 return
