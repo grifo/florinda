@@ -51,7 +51,7 @@ sendMessage = (numbers, message, user, respond) ->
                 return
             
             if body is 'ok'
-                sent ++
+                sent++
             else
                 respond "Error: #{body}"
                 
