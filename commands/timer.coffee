@@ -71,7 +71,7 @@ setSayTimer = (time, text, user, respond) ->
         respond "Ok."
         
 brain.addPattern 'timer',
-    match: /set (timer|alarm|reminder) (?:to )? (.*)/i
+    match: /set (timer|alarm|reminder) (?:to )?(.*)/i
     fn: (user, m, cb) -> setTimer m[2], user, cb
     
 brain.addPattern 'reminder',
