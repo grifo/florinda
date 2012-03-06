@@ -46,8 +46,9 @@ brain.wolframSearch = (query, respond) ->
                 message = null
                 
             try
-                pods = root.children.filter (node) -> node.name is 'pod' and node.attributes.id isnt 'Result'
+                pods = root.children
                 for pod in pods
+                    continue if /Result|UnitConversion|:Expanded/.test pod.attributes.id
                     if message.length > 800 then break
                     subpods = pod.children.filter (node) -> node.name is 'subpod'
                     for subpod in subpods
