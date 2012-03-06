@@ -51,6 +51,8 @@ printFile = (user, url, respond) ->
             return
         if ext in "doc|ppt|pps|xls|odt|ods|odp".split('|')
             command = "openoffice -headless -norestore -p '#{path}'"
+        if ext in "jpg|jpeg|gif|png|bmp".split('|')
+            command = "lpr -o ppi=96 '#{path}'"
         else
             command = "lpr '#{path}'"
         
