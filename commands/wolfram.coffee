@@ -43,7 +43,6 @@ brain.wolframSearch = (query, respond) ->
 
                 message = rtext.firstChild().text
             catch e
-                message = null
                 
             try
                 pods = root.children
@@ -56,6 +55,5 @@ brain.wolframSearch = (query, respond) ->
                         [text] = subpod.children.filter (node) -> node.name is 'plaintext'
                         message += "\n#{[text.firstChild().text]}"
             catch e
-                message += ''
         
         respond message
