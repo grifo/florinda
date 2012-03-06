@@ -48,10 +48,10 @@ brain.wolframSearch = (query, respond) ->
             try
                 pods = root.children.filter (node) -> node.name is 'pod' and node.attributes.id isnt 'Result'
                 for pod in pods
-                    if message.length > 1000 then break
+                    if message.length > 800 then break
                     subpods = pod.children.filter (node) -> node.name is 'subpod'
                     for subpod in subpods
-                        if message.length > 1000 then break
+                        if message.length > 800 then break
                         [text] = subpod.children.filter (node) -> node.name is 'plaintext'
                         message += "\n#{[text.firstChild().text]}"
             catch e
