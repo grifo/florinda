@@ -8,7 +8,7 @@ sendMessage = (numbers, message, user, respond) ->
     if ',' in numbers
         numbers = numbers.split(',').map (n) -> n.trim()
     else
-        numbers = [numbers]
+        numbers = [numbers.trim()]
 
     people = config.sms.numbers
         
@@ -17,7 +17,7 @@ sendMessage = (numbers, message, user, respond) ->
     for number in numbers
         
         if isNaN number
-            number = people[number].toString()
+            number = people[number]
             if not number?
                 respond "I don't know this person."
                 return
