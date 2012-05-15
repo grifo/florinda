@@ -120,8 +120,12 @@ if not program.silent then florinda.say 'Hello!'
 ## Enter command-line mode
 if program.cli
     console.log "## Command-line mode:"
+    lastCommand = Date.now()
     waitForInput = ->
         program.prompt 'you: ', (command) ->
+            # ignore multiple calls (bug in commander?)
+            return if Date.now() - lastCommand < 1000
+            lastCommand = Date.now()
             brain.receive program.user, command, (answer) -> 
                 console.log answer
                 waitForInput()

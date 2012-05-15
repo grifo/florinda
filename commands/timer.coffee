@@ -70,14 +70,73 @@ setSayTimer = (time, text, user, respond) ->
         setTimeout (-> respond "#{text}"), time
         respond "Ok."
         
+count = (num, dir, down, respond) ->
+    num = +num
+    
+    countdown = dir is 'from' or down
+    
+    if countdown
+        target = 0
+    else
+        target = num
+        num = 1
+        
+    if (countdown and 0 < num < 90) or (not countdown and 0 < target < 90)
+        
+        next = ->
+            if num is target
+                if dir is 'from' then respond brain.anyOf [
+                    "Bam!"
+                    "Bang!"
+                    "Pow!"
+                    "0"
+                    "Kaboom!"
+                    "Sequence completed."
+                    "Done."
+                ]
+                else respond num
+                return
+            else
+                respond num       
+            if countdown
+                num--
+                setTimeout(next, 1000) if num >= 0
+                console.log "timer from #{num}"
+            else
+                num++
+                setTimeout(next, 1000) if num <= target
+                console.log "timer to #{num}"
+            
+        setTimeout next, 1000
+    
+    else if num > 1000
+        respond brain.anyOf [
+            "Sure."
+            "Yeah."
+            "Of course."
+            "Why don't *you* do that?"
+        ]
+    else
+        respond brain.anyOf [
+            "How long would that take?"
+            "I don't have time for that."
+        ]
+        
 brain.addPattern 'timer',
     match: /set (timer|alarm|reminder) (?:to )?(.*)/i
     fn: (user, m, cb) -> setTimer m[2], user, cb
     
 brain.addPattern 'reminder',
-    match: [/remind (\w+) (?:to|of|about) (.+) in (.+)/i]
+    match: /remind (\w+) (?:to|of|about) (.+) in (.+)/i
     fn: (user, m, cb) -> setReminder m[3], m[2], (if m[1] == 'me' then user else m[1]), cb
     
 brain.addPattern 'sayTimer',
-    match: [/say (.+) in (.+)/i]
+    match: /say (.+) in (.+)/i
     fn: (user, m, cb) -> setSayTimer m[2], m[1], user, cb
+    
+# countdown from 9 -> 9, 8, 7, ...
+# count to 5 -> 1, 2, 3, 4, 5
+brain.addPattern 'countdown',
+    match: /count(down)? ?(from|to)? (\d+)/i
+    fn: (user, m, cb) -> count m[3], m[2], m[1], cb
+    
