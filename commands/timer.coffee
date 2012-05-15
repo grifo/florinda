@@ -70,6 +70,7 @@ setSayTimer = (time, text, user, respond) ->
         setTimeout (-> respond "#{text}"), time
         respond "Ok."
         
+<<<<<<< HEAD
 count = (num, dir, down, respond) ->
     num = +num
     
@@ -122,11 +123,14 @@ count = (num, dir, down, respond) ->
             "I don't have time for that."
         ]
         
+=======
+>>>>>>> d63fddf4c5a6a64eb0907afeb287e3cb458b6c6a
 brain.addPattern 'timer',
     match: /set (timer|alarm|reminder) (?:to )?(.*)/i
     fn: (user, m, cb) -> setTimer m[2], user, cb
     
 brain.addPattern 'reminder',
+<<<<<<< HEAD
     match: /remind (\w+) (?:to|of|about) (.+) in (.+)/i
     fn: (user, m, cb) -> setReminder m[3], m[2], (if m[1] == 'me' then user else m[1]), cb
     
@@ -140,3 +144,11 @@ brain.addPattern 'countdown',
     match: /count(down)? ?(from|to)? (\d+)/i
     fn: (user, m, cb) -> count m[3], m[2], m[1], cb
     
+=======
+    match: [/remind (\w+) (?:to|of|about) (.+) in (.+)/i]
+    fn: (user, m, cb) -> setReminder m[3], m[2], (if m[1] == 'me' then user else m[1]), cb
+    
+brain.addPattern 'sayTimer',
+    match: [/say (.+) in (.+)/i]
+    fn: (user, m, cb) -> setSayTimer m[2], m[1], user, cb
+>>>>>>> d63fddf4c5a6a64eb0907afeb287e3cb458b6c6a
