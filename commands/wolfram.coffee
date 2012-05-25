@@ -17,7 +17,7 @@ brain.wolframSearch = (query, respond) ->
     message = ''
     
     url = 'http://api.wolframalpha.com/v2/query?' + qs.stringify(
-        input  : query
+        input  : query.replace("'", "")
         appid  : config.wolfram.apiKey
         format : ['plaintext']
     )
@@ -48,8 +48,8 @@ brain.wolframSearch = (query, respond) ->
                 pods = root.children
                 npods = 0
                 for pod in pods
-                    if /Result|UnitConversion/.test pod.attributes.id then continue
-                    if npods > 4 or message.length > 600 then break
+                    if /UnitConversion/.test pod.attributes.id then continue
+                    if npods > 5 or message.length > 600 then break
                     subpods = pod.children.filter (node) -> node.name is 'subpod'
                     for subpod in subpods
                         if message.length > 600 then break
