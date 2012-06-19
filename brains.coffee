@@ -4,7 +4,7 @@ fs      = require 'fs'
 
 module.exports =
     # returns a random one from an array of strings
-    anyOf: (answers) -> answers[ Math.floor(Math.random() * (answers.length+.99)) ]
+    anyOf: (answers) -> answers[ Math.floor(Math.random() * answers.length) ]
     # confirm some action
     queued: []
     confirm: (obj) ->
