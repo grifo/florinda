@@ -621,9 +621,8 @@ Your momma is so FAT I have to defragment her weekly
 
 yoMama = (theme, respond) -> 
     if theme?
-        jk = jokes.filter (j) -> j.indexOf(theme) >= 0
-        if jk.length is 0 then jk = jokes
-        respond brain.anyOf jk
+        jk = jokes.filter((j) -> j.indexOf(theme) >= 0)
+        respond brain.anyOf (if jk.length > 1 then jk else jokes)
     else
         respond brain.anyOf jokes
 
